@@ -118,13 +118,8 @@ if __name__ == "__main__":
 
   if args.arch == "gpt2":
     config = GPT2Config().from_json_file(args.config)
-    #model_cls = GPT2LMHeadModel
-    #model = GPT2Model.from_pretrained("distilgpt2")
-    #model = AutoModelWithLMHead("distilgpt2") 
     model = GPT2LMHeadModel.from_pretrained("distilgpt2")
-    #print("UVA",model.max_seq_length)
     model.max_seq_length = 1024
-    print("UVA",model.max_seq_length)
   elif args.arch == "xl":
     config = TransfoXLConfig().from_json_file(args.config)
     model_cls = TransfoXLLMHeadModel
@@ -140,9 +135,11 @@ if __name__ == "__main__":
     raise NotImplementedError 
   
   config.vocab_size = vocab_size
+  ####
+  # Uncomment the collowing line and add a checkpoint for tests
+  ####
   #args.ckpt = "/EL_VELOCITY_DURATION_POLYPHONY_ENCODER_gpt2_GENRE_DISCOGS_Dec_10_16_04_num_bars_4_12/checkpoint-6912"
-  print("CHECKPOINT")
-  print(args.ckpt)
+
   if len(args.ckpt.strip()) == 0:
     ckpt_path = None
     model = model_cls(config)
