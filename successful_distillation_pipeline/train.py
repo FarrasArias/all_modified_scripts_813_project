@@ -118,13 +118,8 @@ if __name__ == "__main__":
 
   if args.arch == "gpt2":
     config = GPT2Config().from_json_file(args.config)
-    #model_cls = GPT2LMHeadModel
-    #model = GPT2Model.from_pretrained("distilgpt2")
-    #model = AutoModelWithLMHead("distilgpt2") 
     model = GPT2LMHeadModel.from_pretrained("distilgpt2")
-    #print("UVA",model.max_seq_length)
     model.max_seq_length = 1024
-    print("UVA",model.max_seq_length)
   elif args.arch == "xl":
     config = TransfoXLConfig().from_json_file(args.config)
     model_cls = TransfoXLLMHeadModel
@@ -140,9 +135,11 @@ if __name__ == "__main__":
     raise NotImplementedError 
   
   config.vocab_size = vocab_size
+  ####
+  # Uncomment the collowing line and add a checkpoint for tests
+  ####
   #args.ckpt = "/EL_VELOCITY_DURATION_POLYPHONY_ENCODER_gpt2_GENRE_DISCOGS_Dec_10_16_04_num_bars_4_12/checkpoint-6912"
-  print("CHECKPOINT")
-  print(args.ckpt)
+
   if len(args.ckpt.strip()) == 0:
     ckpt_path = None
     model = model_cls(config)
@@ -184,7 +181,9 @@ if __name__ == "__main__":
   trainer.train_dataset = train_dataset
   trainer.eval_dataset = eval_dataset
 
- 
+  ############
+  #This code is for the Inference Time Tests
+  ####
   #for inputs in trainer.eval_dataset:
   #  ins = inputs
   #  print(inputs)
@@ -198,16 +197,11 @@ if __name__ == "__main__":
   #  t = time.time()
   #  trainer.predict([insi])
   #  times.append(time.time()-t)
-    
   #print(times)
-  ##t = time.time()
+  ####
+  #End of inference time tests
+  ############
+  
   trainer.train(ckpt_path)
-  #args = PyTorchBenchmarkArguments(models=model, batch_sizes=[8], sequence_lengths=[8, 32, 128, 512])
-  #benchmark = PyTorchBenchmark(args)
-  ##ins = {"input_ids":ins["input_ids"][0],"attention_mask":ins["attention_mask"][0], "labels":ins["labels"][0]}
-  ##print(ins["input_ids"],len(ins["input_ids"]))
-  ##trainer.predict([ins])
-  ##print(t)
-  #trainer.evaluate()
-  #trainer.prediction_step()
+  trainer.evaluate()
   

@@ -68,7 +68,7 @@ public:
     num_bars = 4;
     min_tracks = 2;
     max_tracks = 12;
-    max_seq_len = 1048;
+    max_seq_len = 1024;
 
     engine.seed(time(NULL));
 
