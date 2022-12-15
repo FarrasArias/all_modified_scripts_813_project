@@ -1,6 +1,6 @@
-# 
+# Code Modifications
 
-# Edits
+## Edits
 In script build_dataset.py the encoder was changed on line 19 to TrackDensityEncoder
 
 In script jagged.h line 71 max_seq_len was changed to 1024.
