@@ -184,7 +184,9 @@ if __name__ == "__main__":
   trainer.train_dataset = train_dataset
   trainer.eval_dataset = eval_dataset
 
- 
+  ############
+  #This code is for the Inference Time Tests
+  ####
   #for inputs in trainer.eval_dataset:
   #  ins = inputs
   #  print(inputs)
@@ -198,16 +200,11 @@ if __name__ == "__main__":
   #  t = time.time()
   #  trainer.predict([insi])
   #  times.append(time.time()-t)
-    
   #print(times)
-  ##t = time.time()
+  ####
+  #End of inference time tests
+  ############
+  
   trainer.train(ckpt_path)
-  #args = PyTorchBenchmarkArguments(models=model, batch_sizes=[8], sequence_lengths=[8, 32, 128, 512])
-  #benchmark = PyTorchBenchmark(args)
-  ##ins = {"input_ids":ins["input_ids"][0],"attention_mask":ins["attention_mask"][0], "labels":ins["labels"][0]}
-  ##print(ins["input_ids"],len(ins["input_ids"]))
-  ##trainer.predict([ins])
-  ##print(t)
-  #trainer.evaluate()
-  #trainer.prediction_step()
+  trainer.evaluate()
   
